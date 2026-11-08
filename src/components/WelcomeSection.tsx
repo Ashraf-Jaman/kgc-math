@@ -1,16 +1,16 @@
 export default function WelcomeSection() {
   return (
     <section
-      className="min-h-[462px] w-full overflow-hidden bg-gradient-to-br from-[#FFF2F2] via-[#FFF7F7] to-[#FFFCFC] px-5 py-[58px] max-[760px]:min-h-0 max-[760px]:px-4 max-[760px]:py-[42px] max-[430px]:py-[34px]"
+      className="min-h-[462px] w-full overflow-hidden bg-[#F4F8FB] px-5 py-[58px] max-[760px]:min-h-0 max-[760px]:px-4 max-[760px]:py-[42px] max-[430px]:py-[34px]"
       aria-labelledby="welcome-heading"
     >
       <div className="mx-auto w-full max-w-[1134px]">
         <h1
           id="welcome-heading"
-          className="flex items-center gap-3 text-[36px] font-extrabold leading-[42px] text-[#080808] max-[760px]:text-[clamp(1.6rem,7vw,2rem)] max-[760px]:leading-[1.2]"
+          className="flex items-center gap-3 text-[36px] font-extrabold leading-[42px] text-[#164A7A] max-[760px]:text-[clamp(1.6rem,7vw,2rem)] max-[760px]:leading-[1.2]"
         >
           <span
-            className="h-8 w-[5px] shrink-0 bg-[#AC1F25] max-[430px]:h-7 max-[430px]:w-1"
+            className="h-8 w-[5px] shrink-0 bg-[#D9A441] max-[430px]:h-7 max-[430px]:w-1"
             aria-hidden="true"
           />
           Welcome

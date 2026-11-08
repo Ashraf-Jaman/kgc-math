@@ -44,6 +44,8 @@ export default function Navbar() {
             <NavLink href="/about-us" label="About Us" active={isActive("/about-us")} onNavigate={closeMobileMenu} />
             <DropdownMenu label="Programs" links={programLinks} active={isActive("/programs")} onNavigate={closeMobileMenu} />
             <DropdownMenu label="People" links={peopleLinks} active={isActive("/people")} onNavigate={closeMobileMenu} />
+            <NavLink href="/notices" label="Notices" active={isActive("/notices")} onNavigate={closeMobileMenu} />
+            <NavLink href="/alumni" label="Alumni" active={isActive("/alumni")} onNavigate={closeMobileMenu} />
             <NavLink href="/contact" label="Contact" active={isActive("/contact")} onNavigate={closeMobileMenu} />
           </div>
         </div>
