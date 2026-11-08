@@ -15,6 +15,20 @@ const notices = [
     title: "গণশুনানি",
     published: "Published January 20, 2025",
   },
+  {
+    day: "10",
+    month: "FEB",
+    year: "2025",
+    title: "২০২৪-২০২৫ শিক্ষাবর্ষে ১ম বর্ষ স্নাতক (সম্মান) শ্রেণির ওরিয়েন্টেশন ও ক্লাস শুরুর বিজ্ঞপ্তি",
+    published: "Published February 10, 2025",
+  },
+  {
+    day: "04",
+    month: "MAR",
+    year: "2025",
+    title: "মাস্টার্স শেষ পর্ব পরীক্ষা-২০২২ এর ফরম পূরণ ও ফি জমাদান সংক্রান্ত জরুরি নোটিশ",
+    published: "Published March 04, 2025",
+  },
 ];
 
 export default function NoticeBoard() {
