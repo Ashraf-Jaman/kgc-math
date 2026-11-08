@@ -1,28 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-
-const events = [
-  {
-    title: "Mathematics Conference Dinner",
-    description: "3rd National Mathematics Conference Dinner 2025 organized with distinguished scholars and guests.",
-    date: "15 Mar 2025",
-    image: "/news-conference-dinner.jpg",
-  },
-  {
-    title: "Call for submission of Abstract on the A F Mujibur Rahman - Bangladesh Mathematical Society 3rd National Mathematics Conference 2024",
-    description: "We are pleased to inform you about the upcoming mathematics conference and invitation for research paper submissions.",
-    date: "05 Dec 2024",
-    image: "/news-math-abstract.jpg",
-  },
-  {
-    title: "Freshers Reception of Postgraduate Students",
-    description: "A grand freshers reception was organized by the Department of Mathematics welcoming the newly admitted students.",
-    date: "12 Jan 2025",
-    image: "/news-freshers-reception.jpg",
-  },
-];
+import { useEffect, useState } from "react";
+import { NewsItem, getNews } from "@/lib/api";
 
 export default function NewsEvents() {
+  const [events, setEvents] = useState<NewsItem[]>([]);
+
+  useEffect(() => {
+    getNews({ limit: 3 }).then((data) => {
+      if (data && data.length > 0) {
+        setEvents(data);
+      }
+    });
+  }, []);
+
   return (
     <section className="bg-[#F4F8FB] px-3 pb-16 pt-2 sm:px-5 sm:pb-20" aria-labelledby="news-events-heading">
       <div className="mx-auto w-full max-w-[1140px]">
@@ -34,9 +27,9 @@ export default function NewsEvents() {
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {events.map((event) => (
+          {events.map((event, idx) => (
             <article
-              key={event.title}
+              key={event._id || `${event.title}-${idx}`}
               className="group flex flex-col overflow-hidden rounded-xl border border-[#E5EAF0] bg-white shadow-[0_8px_20px_rgb(22_74_122_/_8%)] transition duration-200 hover:-translate-y-1.5 hover:shadow-[0_16px_32px_rgb(22_74_122_/_14%)]"
             >
               {/* Taller image banner */}
@@ -100,7 +93,7 @@ function CalendarIcon() {
 
 function ArrowIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M5 12h14" />
       <path d="m13 6 6 6-6 6" />
     </svg>

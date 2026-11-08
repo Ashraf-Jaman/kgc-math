@@ -1,37 +1,20 @@
-import Link from "next/link";
+"use client";
 
-const notices = [
-  {
-    day: "17",
-    month: "JUN",
-    year: "2025",
-    title: "জুলাই আন্দোলনের তালিকা সংক্রান্ত বিজ্ঞপ্তি",
-    published: "Published June 17, 2025",
-  },
-  {
-    day: "20",
-    month: "JAN",
-    year: "2025",
-    title: "গণশুনানি",
-    published: "Published January 20, 2025",
-  },
-  {
-    day: "10",
-    month: "FEB",
-    year: "2025",
-    title: "২০২৪-২০২৫ শিক্ষাবর্ষে ১ম বর্ষ স্নাতক (সম্মান) শ্রেণির ওরিয়েন্টেশন ও ক্লাস শুরুর বিজ্ঞপ্তি",
-    published: "Published February 10, 2025",
-  },
-  {
-    day: "04",
-    month: "MAR",
-    year: "2025",
-    title: "মাস্টার্স শেষ পর্ব পরীক্ষা-২০২২ এর ফরম পূরণ ও ফি জমাদান সংক্রান্ত জরুরি নোটিশ",
-    published: "Published March 04, 2025",
-  },
-];
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { NoticeItem, getNotices } from "@/lib/api";
 
 export default function NoticeBoard() {
+  const [notices, setNotices] = useState<NoticeItem[]>([]);
+
+  useEffect(() => {
+    getNotices({ limit: 4 }).then((data) => {
+      if (data && data.length > 0) {
+        setNotices(data);
+      }
+    });
+  }, []);
+
   return (
     <section className="bg-[#F4F8FB] px-3 pb-16 pt-3 sm:px-5 sm:pb-20 sm:pt-4" aria-labelledby="notice-board-heading">
       <div className="mx-auto w-full max-w-[1140px] overflow-hidden rounded-xl bg-white shadow-[0_12px_30px_rgb(22_74_122_/_10%)]">
@@ -46,8 +29,8 @@ export default function NoticeBoard() {
         </div>
 
         <div className="grid gap-3 px-3 pb-4 pt-3 sm:gap-5 sm:px-5 sm:pb-5 sm:pt-4 md:grid-cols-2 md:px-6 md:pb-6">
-          {notices.map((notice) => (
-            <Link key={`${notice.month}-${notice.day}`} href="/notices" className="group flex min-h-[86px] items-center gap-3 rounded-lg border border-[#E5EAF0] bg-white px-3 py-3 transition hover:border-[#2E8B57] hover:bg-[#F4F8FB] sm:min-h-[91px] sm:gap-4 sm:px-4">
+          {notices.map((notice, idx) => (
+            <Link key={notice._id || `${notice.month}-${notice.day}-${idx}`} href="/notices" className="group flex min-h-[86px] items-center gap-3 rounded-lg border border-[#E5EAF0] bg-white px-3 py-3 transition hover:border-[#2E8B57] hover:bg-[#F4F8FB] sm:min-h-[91px] sm:gap-4 sm:px-4">
               <div className="flex h-[66px] w-[56px] shrink-0 flex-col overflow-hidden rounded-[9px] border border-[#D8E1EA] bg-white text-center shadow-[0_3px_8px_rgb(22_74_122_/_10%)] sm:h-[68px] sm:w-[62px]">
                 <span className="flex h-6 items-center justify-center bg-[#164A7A] text-[10px] font-extrabold tracking-[0.12em] text-[#D9A441]">{notice.month}</span>
                 <span className="flex flex-1 items-center justify-center text-[25px] font-extrabold leading-none text-[#164A7A]">{notice.day}</span>

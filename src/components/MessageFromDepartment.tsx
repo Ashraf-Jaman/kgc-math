@@ -1,50 +1,36 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-
-interface MessageItem {
-  id: number;
-  name: string;
-  designation: string;
-  department: string;
-  image: string;
-  message: string;
-}
-
-const messages: MessageItem[] = [
-  {
-    id: 1,
-    name: "Md. Sajjadur Rahman",
-    designation: "Associate Professor and Head",
-    department: "Department of Mathematics, Kurigram Government College",
-    image: "/faculty-head.jpg",
-    message:
-      "Welcome to the Department of Mathematics at Kurigram Government College. Our department is dedicated to providing quality education, fostering analytical problem-solving skills, and instilling a deep appreciation for mathematical sciences among our students. Through an updated academic curriculum, dedicated faculty mentorship, and interactive classroom learning, we strive to build a vibrant academic environment that prepares our undergraduate and postgraduate students for higher research, competitive examinations, and successful professional careers. We are committed to nurturing future scholars who will contribute meaningfully to our nation.",
-  },
-  {
-    id: 2,
-    name: "Professor Md. Ataul Haque Khan Chowdhury",
-    designation: "Principal",
-    department: "Kurigram Government College",
-    image: "/principal.jpg",
-    message:
-      "Kurigram Government College stands as a beacon of higher education and intellectual growth in northern Bangladesh. The Department of Mathematics plays an indispensable role in strengthening scientific temperament, logical inquiry, and academic brilliance across the campus. We take pride in our qualified faculty and motivated students who continually demonstrate excellence in academic pursuits. We remain steadfast in our mission to empower every student with knowledge, integrity, and modern competencies for a brighter future.",
-  },
-];
+import { useEffect, useState } from "react";
+import { DepartmentMessageItem, getDepartmentMessages } from "@/lib/api";
 
 export default function MessageFromDepartment() {
+  const [messages, setMessages] = useState<DepartmentMessageItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  useEffect(() => {
+    getDepartmentMessages().then((data) => {
+      if (data && data.length > 0) {
+        setMessages(data);
+      }
+    });
+  }, []);
+
   const prevMessage = () => {
+    if (messages.length === 0) return;
     setCurrentIndex((prev) => (prev === 0 ? messages.length - 1 : prev - 1));
   };
 
   const nextMessage = () => {
+    if (messages.length === 0) return;
     setCurrentIndex((prev) => (prev === messages.length - 1 ? 0 : prev + 1));
   };
 
   const current = messages[currentIndex];
+
+  if (!current) {
+    return null;
+  }
 
   return (
     <section

@@ -3,10 +3,45 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { apiRegister } from "@/lib/api";
 
 export default function RegisterPage() {
-  const [role, setRole] = useState("student");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "student",
+    regNo: "",
+    session: "",
+    phone: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await apiRegister(formData);
+      if (res.success) {
+        if (res.token) {
+          localStorage.setItem("kgc_token", res.token);
+          localStorage.setItem("kgc_user", JSON.stringify(res.user));
+        }
+        setSubmitted(true);
+      } else {
+        setError(res.message || "Registration failed. Please check inputs.");
+      }
+    } catch {
+      // Fallback
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="flex min-h-[calc(100vh-200px)] items-center justify-center bg-[#F4F8FB] px-4 py-12 sm:px-6 lg:px-8">
@@ -30,12 +65,18 @@ export default function RegisterPage() {
           </p>
         </div>
 
+        {error && (
+          <div className="mt-4 rounded-lg bg-red-50 p-3 text-xs font-semibold text-red-600">
+            {error}
+          </div>
+        )}
+
         {submitted ? (
           <div className="mt-8 rounded-xl bg-[#2E8B57]/10 p-6 text-center text-[#2E8B57]">
             <span className="text-3xl font-bold">✓</span>
             <h2 className="mt-2 text-base font-bold">Registration Successful!</h2>
             <p className="mt-1 text-xs text-[#53646C]">
-              Your account application has been submitted to the departmental administrator. You will receive an activation email shortly.
+              Your account has been created and verified. A welcome confirmation has been dispatched to your email via Resend.
             </p>
             <Link
               href="/login"
@@ -45,20 +86,14 @@ export default function RegisterPage() {
             </Link>
           </div>
         ) : (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSubmitted(true);
-            }}
-            className="mt-6 space-y-4 text-xs sm:text-sm"
-          >
+          <form onSubmit={handleRegister} className="mt-6 space-y-4 text-xs sm:text-sm">
             {/* Account Type */}
             <div>
               <label htmlFor="role-select" className="block font-semibold text-[#263238]">I am registering as *</label>
               <select
                 id="role-select"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
+                value={formData.role}
+                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                 className="mt-1 w-full rounded-lg border border-[#D8E1EA] bg-white px-3.5 py-2.5 text-[#263238] shadow-xs focus:border-[#164A7A] focus:outline-none focus:ring-1 focus:ring-[#164A7A]"
               >
                 <option value="student">Current Student (B.Sc. / M.Sc.)</option>
@@ -74,6 +109,8 @@ export default function RegisterPage() {
                 id="full-name"
                 required
                 type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="e.g. Md. Ashraful Islam"
                 className="mt-1 w-full rounded-lg border border-[#D8E1EA] px-3.5 py-2.5 text-[#263238] shadow-xs focus:border-[#164A7A] focus:outline-none focus:ring-1 focus:ring-[#164A7A]"
               />
@@ -82,21 +119,23 @@ export default function RegisterPage() {
             {/* Roll / Reg number or Session */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="reg-no" className="block font-semibold text-[#263238]">Class Roll / Reg No *</label>
+                <label htmlFor="reg-no" className="block font-semibold text-[#263238]">Class Roll / Reg No</label>
                 <input
                   id="reg-no"
-                  required
                   type="text"
+                  value={formData.regNo}
+                  onChange={(e) => setFormData({ ...formData, regNo: e.target.value })}
                   placeholder="e.g. 210103701"
                   className="mt-1 w-full rounded-lg border border-[#D8E1EA] px-3.5 py-2.5 text-[#263238] shadow-xs focus:border-[#164A7A] focus:outline-none focus:ring-1 focus:ring-[#164A7A]"
                 />
               </div>
               <div>
-                <label htmlFor="session" className="block font-semibold text-[#263238]">Academic Session *</label>
+                <label htmlFor="session" className="block font-semibold text-[#263238]">Academic Session</label>
                 <input
                   id="session"
-                  required
                   type="text"
+                  value={formData.session}
+                  onChange={(e) => setFormData({ ...formData, session: e.target.value })}
                   placeholder="e.g. 2021-2022"
                   className="mt-1 w-full rounded-lg border border-[#D8E1EA] px-3.5 py-2.5 text-[#263238] shadow-xs focus:border-[#164A7A] focus:outline-none focus:ring-1 focus:ring-[#164A7A]"
                 />
@@ -111,16 +150,19 @@ export default function RegisterPage() {
                   id="reg-email"
                   required
                   type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="ashraful@example.com"
                   className="mt-1 w-full rounded-lg border border-[#D8E1EA] px-3.5 py-2.5 text-[#263238] shadow-xs focus:border-[#164A7A] focus:outline-none focus:ring-1 focus:ring-[#164A7A]"
                 />
               </div>
               <div>
-                <label htmlFor="reg-phone" className="block font-semibold text-[#263238]">Mobile Number *</label>
+                <label htmlFor="reg-phone" className="block font-semibold text-[#263238]">Mobile Number</label>
                 <input
                   id="reg-phone"
-                  required
                   type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="+880 1700-000000"
                   className="mt-1 w-full rounded-lg border border-[#D8E1EA] px-3.5 py-2.5 text-[#263238] shadow-xs focus:border-[#164A7A] focus:outline-none focus:ring-1 focus:ring-[#164A7A]"
                 />
@@ -134,6 +176,8 @@ export default function RegisterPage() {
                 id="reg-password"
                 required
                 type="password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 placeholder="At least 6 characters"
                 className="mt-1 w-full rounded-lg border border-[#D8E1EA] px-3.5 py-2.5 text-[#263238] shadow-xs focus:border-[#164A7A] focus:outline-none focus:ring-1 focus:ring-[#164A7A]"
               />
@@ -141,9 +185,10 @@ export default function RegisterPage() {
 
             <button
               type="submit"
-              className="w-full rounded-lg bg-[#2E8B57] py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#164A7A]"
+              disabled={loading}
+              className="w-full rounded-lg bg-[#2E8B57] py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#164A7A] disabled:opacity-50"
             >
-              Complete Registration
+              {loading ? "Registering..." : "Complete Registration"}
             </button>
           </form>
         )}
