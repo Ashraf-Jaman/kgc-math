@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Department of Mathematics",
+  title: "KGC : Department of Mathematics",
   description: "Department of Mathematics, Kurigram Government College",
   icons: {
     icon: "/fav-icon.png",
