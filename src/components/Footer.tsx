@@ -249,7 +249,14 @@ export default function Footer() {
           <p>© 2026 Department of Mathematics, Kurigram Government College. All Rights Reserved.</p>
           <p>
             Design, Development and Maintenance by{" "}
-            <span className="font-bold text-[#D9A441]">ICT Cell, KGC</span>
+            <a
+              href="https://ashraf-jaman.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-[#D9A441] underline-offset-4 transition hover:text-white hover:underline"
+            >
+              ashraf-jaman
+            </a>
           </p>
         </div>
       </div>
