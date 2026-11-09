@@ -253,9 +253,9 @@ export default function Footer() {
               href="https://ashraf-jaman.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-bold text-[#D9A441] underline-offset-4 transition hover:text-white hover:underline"
+              className="font-bold text-orange-400 underline-offset-4 transition-colors hover:text-orange-300 hover:underline"
             >
-              ashraf-jaman
+              Md Ashraf Jaman Hridoy
             </a>
           </p>
         </div>
