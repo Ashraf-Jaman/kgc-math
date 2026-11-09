@@ -96,7 +96,7 @@ const defaultNews = [
 
 const defaultMessages = [
   {
-    name: "Md. Sajjadur Rahman",
+    name: "Md. Moshiur Rahman",
     designation: "Associate Professor and Head",
     department: "Department of Mathematics, Kurigram Government College",
     image: "/faculty-head.jpg",
@@ -104,18 +104,18 @@ const defaultMessages = [
     order: 1,
   },
   {
-    name: "Professor Md. Ataul Haque Khan Chowdhury",
-    designation: "Principal",
-    department: "Kurigram Government College",
-    image: "/principal.jpg",
-    message: "Kurigram Government College stands as a beacon of higher education and intellectual growth in northern Bangladesh. The Department of Mathematics plays an indispensable role in strengthening scientific temperament, logical inquiry, and academic brilliance across the campus.",
+    name: "Md. Rashedul Islam",
+    designation: "Lecturer",
+    department: "Department of Mathematics, Kurigram Government College",
+    image: "/lecturer.jpg",
+    message: "Mathematics is the foundation of logical reasoning and scientific inquiry. In our department, we strive to create an engaging and supportive environment where students are inspired to explore mathematical problem solving and reach their highest potential.",
     order: 2,
   },
 ];
 
 const defaultFaculties = [
   {
-    name: "Md. Sajjadur Rahman",
+    name: "Md. Moshiur Rahman",
     designation: "Associate Professor",
     role: "Head of the Department",
     education: "B.Sc. (Honours), M.Sc. in Mathematics",
@@ -146,6 +146,16 @@ const defaultFaculties = [
     order: 3,
   },
   {
+    name: "Md. Rashedul Islam",
+    designation: "Lecturer",
+    education: "B.Sc. (Honours), M.Sc. in Mathematics",
+    specialization: "Pure Mathematics, Algebra & Calculus",
+    email: "rashedul.math@kgc.ac.bd",
+    phone: "+880 1718-876543",
+    image: "/lecturer.jpg",
+    order: 4,
+  },
+  {
     name: "Farhana Yasmin",
     designation: "Lecturer",
     education: "B.Sc. (Honours), M.Sc. in Mathematics (DU)",
@@ -153,7 +163,7 @@ const defaultFaculties = [
     email: "farhana.math@kgc.ac.bd",
     phone: "+880 1718-876543",
     image: "/faculty-head.jpg",
-    order: 4,
+    order: 5,
   },
   {
     name: "Md. Mahfuzur Rahman",
@@ -163,7 +173,7 @@ const defaultFaculties = [
     email: "mahfuz.math@kgc.ac.bd",
     phone: "+880 1719-543210",
     image: "/faculty-head.jpg",
-    order: 5,
+    order: 6,
   },
 ];
 
