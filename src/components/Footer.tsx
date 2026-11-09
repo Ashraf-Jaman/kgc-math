@@ -245,15 +245,14 @@ export default function Footer() {
 
       {/* Sub-footer Bar */}
       <div className="border-t border-white/10 bg-[#081F37] py-5">
-        <div className="mx-auto flex w-[calc(100%-40px)] max-w-[1180px] flex-col items-center justify-between gap-3 text-center text-xs text-[#BAC7D5] sm:flex-row sm:text-left">
-          <p>© 2026 Department of Mathematics, Kurigram Government College. All Rights Reserved.</p>
+        <div className="mx-auto flex w-[calc(100%-40px)] max-w-[1180px] items-center justify-center text-center text-xs text-[#BAC7D5]">
           <p>
             Design, Development and Maintenance by{" "}
             <a
               href="https://ashraf-jaman.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-bold text-orange-400 underline-offset-4 transition-colors hover:text-orange-300 hover:underline"
+              className="font-bold text-green-400 underline-offset-4 transition-colors hover:text-green-300 hover:underline"
             >
               Md Ashraf Jaman Hridoy
             </a>
