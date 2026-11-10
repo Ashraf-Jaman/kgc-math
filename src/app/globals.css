@@ -15,6 +15,10 @@
   box-sizing: border-box;
 }
 
+button {
+  cursor: pointer;
+}
+
 html {
   min-height: 100%;
 }
@@ -97,4 +101,38 @@ a {
   .site-navbar-dropdown-link {
     color: #ffffff;
   }
+}
+
+/* Hero Carousel Buttons */
+.hero-btn-primary {
+  background-color: #2e8b57;
+  color: #ffffff !important;
+  border: 2px solid #2e8b57;
+  box-shadow: 0 4px 14px rgba(46, 139, 87, 0.35);
+  transition: all 0.3s ease;
+}
+
+.hero-btn-primary:hover {
+  background-color: #164a7a;
+  color: #ffffff !important;
+  border-color: #d9a441;
+  box-shadow: 0 6px 20px rgba(217, 164, 65, 0.45);
+  transform: translateY(-2px);
+}
+
+.hero-btn-secondary {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff !important;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.hero-btn-secondary:hover {
+  background-color: #2e8b57;
+  color: #ffffff !important;
+  border-color: #2e8b57;
+  box-shadow: 0 6px 20px rgba(46, 139, 87, 0.45);
+  transform: translateY(-2px);
 }

@@ -229,11 +229,11 @@ export default function HeroCarousel() {
                     >
                       <Link
                         href={slide.primaryBtnLink}
-                        className="inline-flex items-center gap-2 rounded-lg bg-[#2E8B57] px-5 sm:px-6 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-[#2E8B57]/30 transition hover:bg-[#236b43] hover:scale-105 active:scale-95"
+                        className="hero-btn-primary group/btn inline-flex items-center gap-2.5 rounded-lg px-5 sm:px-6 py-3 text-sm sm:text-base font-bold cursor-pointer"
                       >
-                        {slide.primaryBtnText}
+                        <span>{slide.primaryBtnText}</span>
                         <svg
-                          className="h-4 w-4"
+                          className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1"
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="2.5"
@@ -249,7 +249,7 @@ export default function HeroCarousel() {
 
                       <Link
                         href={slide.secondaryBtnLink}
-                        className="inline-flex items-center gap-2 rounded-lg border-2 border-white/60 bg-white/10 backdrop-blur-md px-5 sm:px-6 py-[10px] text-sm sm:text-base font-bold text-white transition hover:bg-white hover:text-[#164A7A] hover:border-white hover:scale-105 active:scale-95"
+                        className="hero-btn-secondary inline-flex items-center gap-2 rounded-lg px-5 sm:px-6 py-[10px] text-sm sm:text-base font-bold cursor-pointer"
                       >
                         {slide.secondaryBtnText}
                       </Link>
@@ -267,10 +267,10 @@ export default function HeroCarousel() {
         type="button"
         onClick={prevSlide}
         aria-label="Previous slide"
-        className="group absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md border border-white/20 transition hover:bg-[#2E8B57] hover:border-transparent hover:scale-110 active:scale-95"
+        className="group absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-slate-900/50 text-white backdrop-blur-md border border-white/30 shadow-lg shadow-black/30 transition-all duration-300 hover:bg-[#2E8B57] hover:border-[#2E8B57] hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(46,139,87,0.5)] active:scale-95 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#D9A441]"
       >
         <svg
-          className="h-6 w-6 transition-transform group-hover:-translate-x-0.5"
+          className="h-6 w-6 transition-transform duration-300 group-hover:-translate-x-0.5"
           fill="none"
           stroke="currentColor"
           strokeWidth="2.5"
@@ -288,10 +288,10 @@ export default function HeroCarousel() {
         type="button"
         onClick={nextSlide}
         aria-label="Next slide"
-        className="group absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md border border-white/20 transition hover:bg-[#2E8B57] hover:border-transparent hover:scale-110 active:scale-95"
+        className="group absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-slate-900/50 text-white backdrop-blur-md border border-white/30 shadow-lg shadow-black/30 transition-all duration-300 hover:bg-[#2E8B57] hover:border-[#2E8B57] hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(46,139,87,0.5)] active:scale-95 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#D9A441]"
       >
         <svg
-          className="h-6 w-6 transition-transform group-hover:translate-x-0.5"
+          className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-0.5"
           fill="none"
           stroke="currentColor"
           strokeWidth="2.5"
@@ -309,7 +309,7 @@ export default function HeroCarousel() {
       <div className="absolute bottom-5 sm:bottom-8 left-0 right-0 z-20">
         <div className="mx-auto flex w-[calc(100%-40px)] max-w-[1180px] items-center justify-between px-2 sm:px-4">
           {/* Indicators */}
-          <div className="flex items-center gap-2 sm:gap-3 bg-black/30 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full border border-white/10">
+          <div className="flex items-center gap-2 sm:gap-3 bg-black/40 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full border border-white/15 shadow-md">
             {slides.map((slide, index) => {
               const active = index === currentIndex;
               return (
@@ -318,10 +318,10 @@ export default function HeroCarousel() {
                   type="button"
                   onClick={() => goToSlide(index)}
                   aria-label={`Go to slide ${index + 1}`}
-                  className={`h-2 sm:h-2.5 rounded-full transition-all duration-500 ${
+                  className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                     active
                       ? "w-8 sm:w-10 bg-[#D9A441] shadow-[0_0_12px_#D9A441]"
-                      : "w-2 sm:w-2.5 bg-white/50 hover:bg-white"
+                      : "w-2 sm:w-2.5 bg-white/50 hover:bg-[#D9A441] hover:scale-125"
                   }`}
                 />
               );
@@ -329,7 +329,7 @@ export default function HeroCarousel() {
           </div>
 
           {/* Slide counter & Play/Pause */}
-          <div className="flex items-center gap-3 bg-black/30 backdrop-blur-md px-3 sm:px-4 py-1.5 rounded-full border border-white/10 text-white text-xs sm:text-sm font-semibold">
+          <div className="flex items-center gap-3 bg-black/40 backdrop-blur-md px-3 sm:px-4 py-1.5 rounded-full border border-white/15 text-white text-xs sm:text-sm font-semibold shadow-md">
             <span className="text-[#D9A441]">0{currentIndex + 1}</span>
             <span className="text-white/40">/</span>
             <span className="text-white/70">0{total}</span>
@@ -339,7 +339,7 @@ export default function HeroCarousel() {
               onClick={() => setIsPlaying((p) => !p)}
               title={isPlaying ? "Pause autoplay" : "Start autoplay"}
               aria-label={isPlaying ? "Pause autoplay" : "Start autoplay"}
-              className="ml-1 text-white/80 hover:text-white transition"
+              className="ml-1 text-white/80 hover:text-[#D9A441] transition-colors duration-200 cursor-pointer hover:scale-110 active:scale-95"
             >
               {isPlaying ? (
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
