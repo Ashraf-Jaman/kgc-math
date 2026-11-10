@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -11,128 +11,30 @@
   --color-foreground: var(--foreground);
 }
 
-* {
-  box-sizing: border-box;
-}
-
-button {
-  cursor: pointer;
-}
-
-html {
-  min-height: 100%;
-}
-
 body {
   min-height: 100vh;
   margin: 0;
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: "Poppins", Arial, Helvetica, sans-serif;
+  font-family: "Noto Sans Bengali", "Poppins", Arial, Helvetica, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* Keep navigation colors stable across routes and browser refreshes. */
-.site-navbar,
-.site-navbar-link,
-.site-navbar-dropdown-trigger {
-  color: #ffffff;
-}
-
-.site-navbar-dropdown-trigger {
-  background: transparent;
-}
-
-.site-mobile-menu {
-  color: #ffffff;
-  background: transparent;
-}
-
-.site-auth-link {
-  color: #164a7a;
-  background: #ffffff;
-}
-
-.site-auth-button {
-  color: #ffffff;
-  background: #2e8b57;
-}
-
-.site-auth-link:hover {
-  color: #2e8b57;
-  background: #ffffff;
-}
-
-.site-auth-button:hover {
-  color: #ffffff;
-  background: #164a7a;
-}
-
-.site-navbar-link:hover,
-.site-navbar-dropdown-trigger:hover {
-  color: #ffffff;
-  background: #2e8b57;
-}
-
-.site-navbar-dropdown-panel {
-  color: #263238;
-  background: #ffffff;
-}
-
-.site-navbar-dropdown-link {
-  color: #263238;
-}
-
-.site-navbar-dropdown-link:hover {
-  color: #ffffff;
-  background: #2e8b57;
-}
-
-@media (max-width: 760px) {
-  .site-navbar-dropdown-panel {
-    color: #ffffff;
-    background: #164a7a;
+/* Infinite News Marquee */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
   }
-
-  .site-navbar-dropdown-link {
-    color: #ffffff;
+  100% {
+    transform: translateX(-50%);
   }
 }
 
-/* Hero Carousel Buttons */
-.hero-btn-primary {
-  background-color: #2e8b57;
-  color: #ffffff !important;
-  border: 2px solid #2e8b57;
-  box-shadow: 0 4px 14px rgba(46, 139, 87, 0.35);
-  transition: all 0.3s ease;
+.animate-news-marquee {
+  display: inline-flex;
+  width: max-content;
+  animation: marquee 20s linear infinite;
 }
 
-.hero-btn-primary:hover {
-  background-color: #164a7a;
-  color: #ffffff !important;
-  border-color: #d9a441;
-  box-shadow: 0 6px 20px rgba(217, 164, 65, 0.45);
-  transform: translateY(-2px);
-}
-
-.hero-btn-secondary {
-  background-color: rgba(255, 255, 255, 0.12);
-  color: #ffffff !important;
-  border: 2px solid rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-}
-
-.hero-btn-secondary:hover {
-  background-color: #2e8b57;
-  color: #ffffff !important;
-  border-color: #2e8b57;
-  box-shadow: 0 6px 20px rgba(46, 139, 87, 0.45);
-  transform: translateY(-2px);
+.animate-news-marquee:hover {
+  animation-play-state: paused;
 }

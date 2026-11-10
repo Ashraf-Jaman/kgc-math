@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import { authenticateJWT, requireAdmin } from "../middlewares/auth.middleware.js";
 import { NewsEvent } from "../models/NewsEvent.js";
 
 const router = Router();
@@ -21,15 +22,40 @@ router.get("/", async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-// POST new news/event
-router.post("/", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const item = await NewsEvent.create(req.body);
-    res.status(201).json({ success: true, data: item });
-  } catch (error) {
-    console.error("POST /api/news error:", error);
-    res.status(400).json({ success: false, message: "Failed to create news event." });
+// POST new news/event (admin only)
+router.post(
+  "/",
+  authenticateJWT,
+  requireAdmin,
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const item = await NewsEvent.create(req.body);
+      res.status(201).json({ success: true, data: item });
+    } catch (error) {
+      console.error("POST /api/news error:", error);
+      res.status(400).json({ success: false, message: "Failed to create news event." });
+    }
   }
-});
+);
+
+// DELETE a news/event (admin only)
+router.delete(
+  "/:id",
+  authenticateJWT,
+  requireAdmin,
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const item = await NewsEvent.findByIdAndDelete(req.params.id);
+      if (!item) {
+        res.status(404).json({ success: false, message: "News event not found." });
+        return;
+      }
+      res.json({ success: true, message: "News event deleted." });
+    } catch (error) {
+      console.error("DELETE /api/news/:id error:", error);
+      res.status(500).json({ success: false, message: "Failed to delete news event." });
+    }
+  }
+);
 
 export default router;

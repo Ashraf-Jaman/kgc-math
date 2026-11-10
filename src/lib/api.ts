@@ -21,15 +21,6 @@ export interface NewsItem {
   description: string;
 }
 
-export interface DepartmentMessageItem {
-  _id?: string;
-  name: string;
-  designation: string;
-  department: string;
-  image: string;
-  message: string;
-}
-
 export interface FacultyItem {
   _id?: string;
   name: string;
@@ -59,6 +50,22 @@ const fallbackNotices: NoticeItem[] = [
     category: "General",
     title: "গণশুনানি সংক্রান্ত নোটিশ",
     published: "January 20, 2025",
+  },
+  {
+    day: "15",
+    month: "JAN",
+    year: "2025",
+    category: "Scholarship",
+    title: "মেধা ও সাধারণ বৃত্তিপ্রাপ্ত শিক্ষার্থীদের তথ্য হালনাগাদকরণ সংক্রান্ত বিজ্ঞপ্তি",
+    published: "January 15, 2025",
+  },
+  {
+    day: "28",
+    month: "FEB",
+    year: "2025",
+    category: "Exam",
+    title: "স্নাতক (সম্মান) ৩য় বর্ষ ইনকোর্স ও ব্যবহারিক পরীক্ষার সময়সূচি প্রকাশ",
+    published: "February 28, 2025",
   },
   {
     day: "10",
@@ -99,23 +106,6 @@ const fallbackNews: NewsItem[] = [
     date: "12 Jan 2025",
     image: "/news-freshers-reception.jpg",
     description: "A grand freshers reception was organized by the Department of Mathematics welcoming the newly admitted scholars.",
-  },
-];
-
-const fallbackMessages: DepartmentMessageItem[] = [
-  {
-    name: "Md. Moshiur Rahman",
-    designation: "Associate Professor and Head",
-    department: "Department of Mathematics, Kurigram Government College",
-    image: "/faculty-head.jpg",
-    message: "Welcome to the Department of Mathematics at Kurigram Government College. Our department is dedicated to providing quality education, fostering analytical problem-solving skills, and instilling a deep appreciation for mathematical sciences among our students.",
-  },
-  {
-    name: "Md. Rashedul Islam",
-    designation: "Lecturer",
-    department: "Department of Mathematics, Kurigram Government College",
-    image: "/lecturer.jpg",
-    message: "Mathematics is the foundation of logical reasoning and scientific inquiry. In our department, we strive to create an engaging and supportive environment where students are inspired to explore mathematical problem solving and reach their highest potential.",
   },
 ];
 
@@ -177,20 +167,6 @@ export async function getNews(params?: { limit?: number }): Promise<NewsItem[]> 
   }
 }
 
-// Fetch Department Messages from backend API
-export async function getDepartmentMessages(): Promise<DepartmentMessageItem[]> {
-  try {
-    const res = await fetch(`${API_BASE_URL}/messages`, {
-      next: { revalidate: 60 },
-    });
-    if (!res.ok) throw new Error("API response error");
-    const json = await res.json();
-    return json.data || fallbackMessages;
-  } catch {
-    return fallbackMessages;
-  }
-}
-
 // Fetch Faculties from backend API
 export async function getFaculties(): Promise<FacultyItem[]> {
   try {
@@ -205,36 +181,3 @@ export async function getFaculties(): Promise<FacultyItem[]> {
   }
 }
 
-// Submit Contact Inquiry to backend API
-export async function sendContactInquiry(data: {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}) {
-  const res = await fetch(`${API_BASE_URL}/contact`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  return res.json();
-}
-
-// User Authentication API
-export async function apiRegister(data: Record<string, unknown>) {
-  const res = await fetch(`${API_BASE_URL}/auth/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  return res.json();
-}
-
-export async function apiLogin(data: Record<string, unknown>) {
-  const res = await fetch(`${API_BASE_URL}/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  return res.json();
-}

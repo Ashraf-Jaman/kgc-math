@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import { authenticateJWT, requireAdmin } from "../middlewares/auth.middleware.js";
 import { Notice } from "../models/Notice.js";
 
 const router = Router();
@@ -44,15 +45,40 @@ router.get("/:id", async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-// POST new notice
-router.post("/", async (req: Request, res: Response): Promise<void> => {
-  try {
-    const notice = await Notice.create(req.body);
-    res.status(201).json({ success: true, data: notice });
-  } catch (error) {
-    console.error("POST /api/notices error:", error);
-    res.status(400).json({ success: false, message: "Failed to create notice." });
+// POST new notice (admin only)
+router.post(
+  "/",
+  authenticateJWT,
+  requireAdmin,
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const notice = await Notice.create(req.body);
+      res.status(201).json({ success: true, data: notice });
+    } catch (error) {
+      console.error("POST /api/notices error:", error);
+      res.status(400).json({ success: false, message: "Failed to create notice." });
+    }
   }
-});
+);
+
+// DELETE a notice (admin only)
+router.delete(
+  "/:id",
+  authenticateJWT,
+  requireAdmin,
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const notice = await Notice.findByIdAndDelete(req.params.id);
+      if (!notice) {
+        res.status(404).json({ success: false, message: "Notice not found." });
+        return;
+      }
+      res.json({ success: true, message: "Notice deleted." });
+    } catch (error) {
+      console.error("DELETE /api/notices/:id error:", error);
+      res.status(500).json({ success: false, message: "Failed to delete notice." });
+    }
+  }
+);
 
 export default router;

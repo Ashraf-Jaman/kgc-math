@@ -4,79 +4,9 @@ import jwt from "jsonwebtoken";
 import { AuthRequest, authenticateJWT } from "../middlewares/auth.middleware.js";
 import { validateBody } from "../middlewares/validate.middleware.js";
 import { User } from "../models/User.js";
-import { loginSchema, registerSchema } from "../schemas/auth.schema.js";
-import { sendWelcomeEmail } from "../services/resend.service.js";
+import { loginSchema } from "../schemas/auth.schema.js";
 
 const router = Router();
-
-// Register Route
-router.post(
-  "/register",
-  validateBody(registerSchema),
-  async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { name, email, password, role, regNo, session, phone } = req.body;
-
-      // Check existing user
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        res.status(409).json({
-          success: false,
-          message: "An account with this email already exists.",
-        });
-        return;
-      }
-
-      // Hash password
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-
-      // Create user
-      const newUser = await User.create({
-        name,
-        email,
-        password: hashedPassword,
-        role: role || "student",
-        regNo,
-        session,
-        phone,
-      });
-
-      // Generate JWT
-      const secret = process.env.JWT_SECRET || "default_jwt_secret";
-      const token = jwt.sign(
-        { id: newUser._id, email: newUser.email, role: newUser.role },
-        secret,
-        { expiresIn: "7d" }
-      );
-
-      // Send welcome email via Resend (async non-blocking)
-      sendWelcomeEmail(email, name).catch((err) =>
-        console.error("Welcome email failed:", err)
-      );
-
-      res.status(201).json({
-        success: true,
-        message: "Registration successful.",
-        token,
-        user: {
-          id: newUser._id,
-          name: newUser.name,
-          email: newUser.email,
-          role: newUser.role,
-          regNo: newUser.regNo,
-          session: newUser.session,
-        },
-      });
-    } catch (error) {
-      console.error("Register error:", error);
-      res.status(500).json({
-        success: false,
-        message: "Internal server error during registration.",
-      });
-    }
-  }
-);
 
 // Login Route
 router.post(

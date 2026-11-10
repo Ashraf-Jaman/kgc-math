@@ -1,87 +1,48 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-interface Slide {
-  id: number;
-  image: string;
-  badge: string;
-  title: string;
-  highlight: string;
-  subtitle: string;
-  primaryBtnText: string;
-  primaryBtnLink: string;
-  secondaryBtnText: string;
-  secondaryBtnLink: string;
-}
-
-const slides: Slide[] = [
+const slides = [
   {
     id: 1,
-    image: "/slider/campus-view.jpg",
-    badge: "Welcome to KGC",
-    title: "Department of",
-    highlight: "Mathematics",
-    subtitle:
-      "Kurigram Government College — Inspiring logical thinking, research excellence, and academic leadership since 1961.",
-    primaryBtnText: "Explore Programs",
-    primaryBtnLink: "/programs/undergraduate",
-    secondaryBtnText: "About Department",
-    secondaryBtnLink: "/about-us",
+    image: "/slider/1.webp",
+    alt: "কুড়িগ্রাম সরকারি কলেজ ক্যাম্পাস ১",
   },
   {
     id: 2,
-    image: "/slider/math-board.jpg",
-    badge: "Excellence in Pure & Applied Math",
-    title: "Empowering Minds Through",
-    highlight: "Mathematical Science",
-    subtitle:
-      "From calculus and algebra to mathematical modeling and computational data analysis, explore world-class pedagogy.",
-    primaryBtnText: "Faculty Members",
-    primaryBtnLink: "/people/faculty-members",
-    secondaryBtnText: "Notice Board",
-    secondaryBtnLink: "/notices",
+    image: "/slider/2.webp",
+    alt: "কুড়িগ্রাম সরকারি কলেজ ক্যাম্পাস ২",
   },
   {
     id: 3,
-    image: "/slider/students-study.jpg",
-    badge: "Vibrant Academic Community",
-    title: "Fostering Innovation &",
-    highlight: "Collaborative Learning",
-    subtitle:
-      "Interactive seminars, problem-solving workshops, and supportive mentorship preparing students for global careers.",
-    primaryBtnText: "Undergraduate Program",
-    primaryBtnLink: "/programs/undergraduate",
-    secondaryBtnText: "Alumni Network",
-    secondaryBtnLink: "/alumni",
+    image: "/slider/3.webp",
+    alt: "কুড়িগ্রাম সরকারি কলেজ ক্যাম্পাস ৩",
   },
   {
     id: 4,
-    image: "/slider/campus-library.jpg",
-    badge: "Knowledge & Resources",
-    title: "Comprehensive Library &",
-    highlight: "Research Facilities",
-    subtitle:
-      "Extensive collection of modern mathematical texts, national and international publications, and quiet research spaces.",
-    primaryBtnText: "Academic Calendar",
-    primaryBtnLink: "/academic-calendar",
-    secondaryBtnText: "Contact Us",
-    secondaryBtnLink: "/contact",
+    image: "/slider/4.webp",
+    alt: "কুড়িগ্রাম সরকারি কলেজ ক্যাম্পাস ৪",
   },
   {
     id: 5,
-    image: "/slider/college-hall.jpg",
-    badge: "Heritage of North Bengal",
-    title: "A Proud Tradition of",
-    highlight: "Academic Achievement",
-    subtitle:
-      "Consistently cultivating top national graduates and researchers dedicated to national development and science.",
-    primaryBtnText: "Postgraduate Program",
-    primaryBtnLink: "/programs/postgraduate",
-    secondaryBtnText: "Latest News & Events",
-    secondaryBtnLink: "/news-events",
+    image: "/slider/5.jpg",
+    alt: "কুড়িগ্রাম সরকারি কলেজ ক্যাম্পাস ৫",
+  },
+  {
+    id: 6,
+    image: "/slider/6.webp",
+    alt: "কুড়িগ্রাম সরকারি কলেজ ক্যাম্পাস ৬",
+  },
+  {
+    id: 7,
+    image: "/slider/7.webp",
+    alt: "কুড়িগ্রাম সরকারি কলেজ ক্যাম্পাস ৭",
+  },
+  {
+    id: 8,
+    image: "/slider/8.webp",
+    alt: "কুড়িগ্রাম সরকারি কলেজ ক্যাম্পাস ৮",
   },
 ];
 
@@ -105,12 +66,12 @@ export default function HeroCarousel() {
     setCurrentIndex(index);
   };
 
-  // Autoplay
+  // Autoplay slider fast and smooth (every 2.8 seconds)
   useEffect(() => {
     if (!isPlaying) return;
     const timer = setInterval(() => {
       nextSlide();
-    }, 6000);
+    }, 2800);
     return () => clearInterval(timer);
   }, [isPlaying, nextSlide]);
 
@@ -140,126 +101,37 @@ export default function HeroCarousel() {
 
   return (
     <section
-      aria-label="Image Carousel Slider"
-      className="relative w-full overflow-hidden bg-slate-900 select-none"
+      aria-label="Kurigram Government College Image Slider"
+      className="relative w-full overflow-hidden bg-gray-950 select-none group/slider"
       onMouseEnter={() => setIsPlaying(false)}
       onMouseLeave={() => setIsPlaying(true)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Main Slider Container - Large prominent height */}
-      <div className="relative h-[480px] sm:h-[540px] md:h-[620px] lg:h-[680px] w-full">
-        {slides.map((slide, index) => {
-          const isActive = index === currentIndex;
-          return (
+      {/* Slider Viewport with Silky Smooth Sliding Motion */}
+      <div className="relative h-[260px] sm:h-[380px] md:h-[480px] lg:h-[560px] xl:h-[620px] w-full overflow-hidden">
+        <div
+          className="flex h-full w-full transition-transform duration-600 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {slides.map((slide, index) => (
             <div
               key={slide.id}
-              aria-hidden={!isActive}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-              }`}
+              className="relative h-full w-full shrink-0 overflow-hidden"
+              aria-hidden={index !== currentIndex}
             >
-              {/* Background Image */}
-              <div className="relative h-full w-full overflow-hidden">
-                <Image
-                  src={slide.image}
-                  alt={`${slide.title} ${slide.highlight}`}
-                  fill
-                  priority={index === 0}
-                  className={`object-cover transition-transform duration-[7000ms] ease-out ${
-                    isActive ? "scale-105" : "scale-100"
-                  }`}
-                  sizes="100vw"
-                />
-                {/* Multi-layered dark gradient overlay for text readability & elegant aesthetic */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0d2a46]/95 via-[#0e355c]/75 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
-                <div className="absolute inset-0 bg-[#164a7a]/25 mix-blend-multiply" />
-              </div>
-
-              {/* Slide Content */}
-              <div className="absolute inset-0 flex items-center">
-                <div className="mx-auto w-[calc(100%-40px)] max-w-[1180px] px-2 sm:px-4">
-                  <div className="max-w-[760px] text-white">
-                    {/* Badge */}
-                    <div
-                      className={`inline-flex items-center gap-2 rounded-full border border-[#D9A441]/50 bg-[#164A7A]/80 backdrop-blur-md px-4 py-1.5 text-xs sm:text-sm font-semibold text-[#FBE192] shadow-lg transition-all duration-700 delay-100 ${
-                        isActive
-                          ? "translate-y-0 opacity-100"
-                          : "-translate-y-4 opacity-0"
-                      }`}
-                    >
-                      <span className="h-2 w-2 rounded-full bg-[#D9A441] animate-pulse" />
-                      <span>{slide.badge}</span>
-                    </div>
-
-                    {/* Headline */}
-                    <h2
-                      className={`mt-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] drop-shadow-md transition-all duration-700 delay-200 ${
-                        isActive
-                          ? "translate-y-0 opacity-100"
-                          : "translate-y-6 opacity-0"
-                      }`}
-                    >
-                      {slide.title}{" "}
-                      <span className="text-[#D9A441] underline decoration-[#2E8B57] decoration-4 underline-offset-8">
-                        {slide.highlight}
-                      </span>
-                    </h2>
-
-                    {/* Subtitle */}
-                    <p
-                      className={`mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-slate-200 leading-relaxed max-w-[640px] drop-shadow transition-all duration-700 delay-300 ${
-                        isActive
-                          ? "translate-y-0 opacity-100"
-                          : "translate-y-6 opacity-0"
-                      }`}
-                    >
-                      {slide.subtitle}
-                    </p>
-
-                    {/* Action Buttons */}
-                    <div
-                      className={`mt-7 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-4 transition-all duration-700 delay-500 ${
-                        isActive
-                          ? "translate-y-0 opacity-100"
-                          : "translate-y-6 opacity-0"
-                      }`}
-                    >
-                      <Link
-                        href={slide.primaryBtnLink}
-                        className="hero-btn-primary group/btn inline-flex items-center gap-2.5 rounded-lg px-5 sm:px-6 py-3 text-sm sm:text-base font-bold cursor-pointer"
-                      >
-                        <span>{slide.primaryBtnText}</span>
-                        <svg
-                          className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                          />
-                        </svg>
-                      </Link>
-
-                      <Link
-                        href={slide.secondaryBtnLink}
-                        className="hero-btn-secondary inline-flex items-center gap-2 rounded-lg px-5 sm:px-6 py-[10px] text-sm sm:text-base font-bold cursor-pointer"
-                      >
-                        {slide.secondaryBtnText}
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Image
+                src={slide.image}
+                alt={slide.alt}
+                fill
+                priority={index === 0}
+                className="object-cover object-center"
+                sizes="100vw"
+              />
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
 
       {/* Navigation Arrows */}
@@ -267,20 +139,16 @@ export default function HeroCarousel() {
         type="button"
         onClick={prevSlide}
         aria-label="Previous slide"
-        className="group absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-slate-900/50 text-white backdrop-blur-md border border-white/30 shadow-lg shadow-black/30 transition-all duration-300 hover:bg-[#2E8B57] hover:border-[#2E8B57] hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(46,139,87,0.5)] active:scale-95 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#D9A441]"
+        className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm border border-white/20 transition-all duration-200 hover:bg-[#166534] hover:border-[#166534] hover:scale-110 active:scale-95 focus:outline-none"
       >
         <svg
-          className="h-6 w-6 transition-transform duration-300 group-hover:-translate-x-0.5"
+          className="h-5 w-5 sm:h-6 sm:w-6"
           fill="none"
           stroke="currentColor"
           strokeWidth="2.5"
           viewBox="0 0 24 24"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
       </button>
 
@@ -288,71 +156,37 @@ export default function HeroCarousel() {
         type="button"
         onClick={nextSlide}
         aria-label="Next slide"
-        className="group absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-slate-900/50 text-white backdrop-blur-md border border-white/30 shadow-lg shadow-black/30 transition-all duration-300 hover:bg-[#2E8B57] hover:border-[#2E8B57] hover:text-white hover:scale-110 hover:shadow-[0_0_20px_rgba(46,139,87,0.5)] active:scale-95 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#D9A441]"
+        className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm border border-white/20 transition-all duration-200 hover:bg-[#166534] hover:border-[#166534] hover:scale-110 active:scale-95 focus:outline-none"
       >
         <svg
-          className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-0.5"
+          className="h-5 w-5 sm:h-6 sm:w-6"
           fill="none"
           stroke="currentColor"
           strokeWidth="2.5"
           viewBox="0 0 24 24"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M8.25 4.5l7.5 7.5-7.5 7.5"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
         </svg>
       </button>
 
-      {/* Bottom Bar: Indicators + Counter + Pause/Play toggle */}
-      <div className="absolute bottom-5 sm:bottom-8 left-0 right-0 z-20">
-        <div className="mx-auto flex w-[calc(100%-40px)] max-w-[1180px] items-center justify-between px-2 sm:px-4">
-          {/* Indicators */}
-          <div className="flex items-center gap-2 sm:gap-3 bg-black/40 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full border border-white/15 shadow-md">
-            {slides.map((slide, index) => {
-              const active = index === currentIndex;
-              return (
-                <button
-                  key={slide.id}
-                  type="button"
-                  onClick={() => goToSlide(index)}
-                  aria-label={`Go to slide ${index + 1}`}
-                  className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                    active
-                      ? "w-8 sm:w-10 bg-[#D9A441] shadow-[0_0_12px_#D9A441]"
-                      : "w-2 sm:w-2.5 bg-white/50 hover:bg-[#D9A441] hover:scale-125"
-                  }`}
-                />
-              );
-            })}
-          </div>
-
-          {/* Slide counter & Play/Pause */}
-          <div className="flex items-center gap-3 bg-black/40 backdrop-blur-md px-3 sm:px-4 py-1.5 rounded-full border border-white/15 text-white text-xs sm:text-sm font-semibold shadow-md">
-            <span className="text-[#D9A441]">0{currentIndex + 1}</span>
-            <span className="text-white/40">/</span>
-            <span className="text-white/70">0{total}</span>
-
+      {/* Pagination Dots */}
+      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 rounded-full bg-black/40 px-3.5 py-1.5 backdrop-blur-md border border-white/20">
+        {slides.map((_, index) => {
+          const isActive = index === currentIndex;
+          return (
             <button
+              key={index}
               type="button"
-              onClick={() => setIsPlaying((p) => !p)}
-              title={isPlaying ? "Pause autoplay" : "Start autoplay"}
-              aria-label={isPlaying ? "Pause autoplay" : "Start autoplay"}
-              className="ml-1 text-white/80 hover:text-[#D9A441] transition-colors duration-200 cursor-pointer hover:scale-110 active:scale-95"
-            >
-              {isPlaying ? (
-                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                </svg>
-              ) : (
-                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
+              onClick={() => goToSlide(index)}
+              aria-label={`Go to slide ${index + 1}`}
+              className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none ${
+                isActive
+                  ? "w-7 bg-[#FBBF24]"
+                  : "w-2.5 bg-white/60 hover:bg-white"
+              }`}
+            />
+          );
+        })}
       </div>
     </section>
   );

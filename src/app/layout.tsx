@@ -4,8 +4,9 @@ import Footer from "@/components/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "KGC : Department of Mathematics",
-  description: "Department of Mathematics, Kurigram Government College",
+  title: "গণিত বিভাগ | কুড়িগ্রাম সরকারি কলেজ",
+  description:
+    "কুড়িগ্রাম সরকারি কলেজের গণিত বিভাগের অফিসিয়াল ওয়েবসাইট — নোটিশ, গ্যালারি, শিক্ষকমণ্ডলী, প্রোগ্রাম ও একাডেমিক তথ্য।",
   icons: {
     icon: "/fav-icon.png",
     shortcut: "/fav-icon.png",
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="bn"
       className="h-full antialiased"
     >
       <body className="min-h-full flex flex-col">

@@ -5,71 +5,312 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-const programLinks = [
-  { label: "Undergraduate", href: "/programs/undergraduate" },
-  { label: "Postgraduate", href: "/programs/postgraduate" },
+const academicLinks = [
+  { label: "স্নাতক (সম্মান)", href: "/programs/undergraduate" },
+  { label: "স্নাতকোত্তর", href: "/programs/postgraduate" },
 ];
 
-const peopleLinks = [
-  { label: "Faculty Members", href: "/people/faculty-members" },
-  { label: "Office Staffs", href: "/people/office-staffs" },
+const moreLinks = [
+  { label: "আমাদের সম্পর্কে", href: "/about-us" },
+  { label: "শিক্ষকমণ্ডলী", href: "/people/faculty-members" },
+  { label: "অফিস স্টাফ", href: "/people/office-staffs" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isActive = (href: string) => href === "/" ? pathname === href : pathname.startsWith(href);
-  const closeMobileMenu = () => setMobileMenuOpen(false);
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === href : pathname.startsWith(href);
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+    setOpenMobileDropdown(null);
+  };
+
+  const toggleMobileDropdown = (name: string) => {
+    setOpenMobileDropdown((prev) => (prev === name ? null : name));
+  };
 
   return (
-    <header className="bg-white shadow-sm">
-      <div className="mx-auto flex min-h-[106px] w-[calc(100%-40px)] max-w-[1180px] items-center justify-between gap-6 max-[760px]:min-h-[90px] max-[430px]:w-[calc(100%-20px)] max-[430px]:gap-2">
-        <Link className="flex items-center gap-4 max-[760px]:gap-2" href="/" aria-label="Department of Mathematics home">
-          <Image src="/Kurigram_Government_College_logo.jpg" alt="Kurigram Government College logo" width={76} height={76} priority className="h-[76px] w-[76px] rounded-full object-contain max-[760px]:h-[58px] max-[760px]:w-[58px] max-[430px]:h-12 max-[430px]:w-12" />
-          <span className="text-[clamp(1.45rem,3vw,2.25rem)] font-extrabold tracking-[-0.025em] text-[#164A7A] max-[760px]:text-[1.1rem] max-[430px]:text-[0.96rem] max-[430px]:leading-[1.15]">Department of Mathematics</span>
+    <header className="sticky top-0 z-50 bg-[#166534] shadow-md">
+      <div className="mx-auto flex h-[74px] sm:h-[80px] w-full max-w-[1240px] items-center justify-between px-3 sm:px-6 lg:px-8">
+        {/* Left: Logo & Department Info (Left Aligned & in Bangla) */}
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 sm:gap-3 shrink-0 transition-opacity hover:opacity-95"
+          aria-label="গণিত বিভাগ - কুড়িগ্রাম সরকারি কলেজ"
+          onClick={closeMobileMenu}
+        >
+          <Image
+            src="/Kurigram_Government_College_logo.jpg"
+            alt="কুড়িগ্রাম সরকারি কলেজ লোগো"
+            width={52}
+            height={52}
+            priority
+            className="h-11 w-11 sm:h-12 sm:w-12 rounded-full object-contain ring-2 ring-white/30 shrink-0 bg-white shadow-sm"
+          />
+          <div className="flex flex-col text-left items-start justify-center">
+            <span className="text-[14px] sm:text-[16px] font-extrabold tracking-tight text-white leading-[1.25]">
+              গণিত বিভাগ
+            </span>
+            <span className="text-[11px] sm:text-[12px] font-medium text-emerald-100 leading-[1.2]">
+              বিজ্ঞান ভবন (নিচ তলা)
+            </span>
+            <span className="text-[11px] sm:text-[12px] font-bold text-[#FBBF24] leading-[1.2]">
+              কুড়িগ্রাম সরকারি কলেজ
+            </span>
+          </div>
         </Link>
-        <div className="flex shrink-0 items-center gap-3 whitespace-nowrap max-[760px]:gap-1 max-[430px]:gap-0.5">
-          <Link className="site-auth-link rounded border border-transparent px-[17px] py-2 text-sm font-bold text-[#164A7A] transition hover:border-[#2E8B57] hover:text-[#2E8B57] max-[760px]:px-2 max-[760px]:py-1.5 max-[760px]:text-xs max-[430px]:px-1.5 max-[430px]:text-[0.68rem]" href="/login">Login</Link>
-          <Link className="site-auth-button rounded bg-[#2E8B57] px-[17px] py-2 text-sm font-bold text-white transition hover:bg-[#164A7A] max-[760px]:px-2 max-[760px]:py-1.5 max-[760px]:text-xs max-[430px]:px-1.5 max-[430px]:text-[0.68rem]" href="/register">Register</Link>
+
+        {/* Center/Right: Desktop Navigation Links (No box, Yellowish/Light-Green on Hover & Active) */}
+        <nav className="hidden md:flex items-center gap-3 lg:gap-5" aria-label="প্রধান নেভিগেশন">
+          <Link
+            href="/"
+            className={`px-2.5 py-1.5 text-[15px] font-semibold transition-colors duration-200 ${
+              isActive("/") && pathname === "/"
+                ? "text-[#FBBF24]"
+                : "text-white hover:text-[#FBBF24]"
+            }`}
+          >
+            হোম
+          </Link>
+
+          <Link
+            href="/notices"
+            className={`px-2.5 py-1.5 text-[15px] font-semibold transition-colors duration-200 ${
+              isActive("/notices")
+                ? "text-[#FBBF24]"
+                : "text-white hover:text-[#FBBF24]"
+            }`}
+          >
+            নোটিশ
+          </Link>
+
+          {/* Gallery */}
+          <Link
+            href="/gallery"
+            className={`px-2.5 py-1.5 text-[15px] font-semibold transition-colors duration-200 ${
+              isActive("/gallery")
+                ? "text-[#FBBF24]"
+                : "text-white hover:text-[#FBBF24]"
+            }`}
+          >
+            গ্যালারি
+          </Link>
+
+          {/* Academic Dropdown */}
+          <NavDropdown
+            label="একাডেমিক"
+            links={academicLinks}
+            active={isActive("/programs")}
+          />
+
+          {/* More Dropdown */}
+          <NavDropdown
+            label="আরও"
+            links={moreLinks}
+            active={moreLinks.some((link) => pathname.startsWith(link.href))}
+          />
+        </nav>
+
+        {/* Right: Login Button (Hover: Text White, BG Dark Green) */}
+        <div className="hidden md:flex items-center ml-2">
+          <Link
+            href="/admin/login"
+            className="inline-flex items-center justify-center rounded-lg bg-white px-5 py-2 text-[15px] font-bold text-[#166534] shadow-sm transition-all duration-200 hover:bg-[#14532d] hover:text-white hover:ring-1 hover:ring-white/50 hover:shadow-md"
+          >
+            লগইন
+          </Link>
         </div>
+
+        {/* Mobile Hamburger Button */}
+        <button
+          type="button"
+          className="inline-flex md:hidden items-center justify-center p-2 rounded-md text-white hover:bg-[#14532d] transition"
+          aria-expanded={mobileMenuOpen}
+          aria-label="নেভিগেশন মেনু পরিবর্তন করুন"
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+        >
+          {mobileMenuOpen ? (
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
+        </button>
       </div>
 
-      <nav className="site-navbar bg-[#164A7A] shadow-[0_3px_10px_rgb(22_74_122_/_15%)]" aria-label="Main navigation">
-        <div className="mx-auto w-[calc(100%-40px)] max-w-[1180px] max-[760px]:w-[calc(100%-28px)] max-[430px]:w-[calc(100%-20px)]">
-          <button className="site-mobile-menu hidden min-h-12 w-full items-center gap-2 border-0 bg-transparent p-0 text-left text-sm font-extrabold uppercase tracking-[0.04em] text-white max-[760px]:inline-flex" type="button" aria-expanded={mobileMenuOpen} aria-controls="main-navigation-links" onClick={() => setMobileMenuOpen((open) => !open)}>
-            <span className="text-xl text-[#D9A441]" aria-hidden="true">☰</span> Menu
-          </button>
-          <div id="main-navigation-links" className={`hidden flex-col items-stretch pb-2 md:flex md:flex-row md:items-stretch md:justify-center md:pb-0 ${mobileMenuOpen ? "max-[760px]:flex" : "max-[760px]:hidden"}`}>
-            <NavLink href="/" label="Home" active={isActive("/")} onNavigate={closeMobileMenu} />
-            <NavLink href="/about-us" label="About Us" active={isActive("/about-us")} onNavigate={closeMobileMenu} />
-            <DropdownMenu label="Programs" links={programLinks} active={isActive("/programs")} onNavigate={closeMobileMenu} />
-            <DropdownMenu label="People" links={peopleLinks} active={isActive("/people")} onNavigate={closeMobileMenu} />
-            <NavLink href="/notices" label="Notices" active={isActive("/notices")} onNavigate={closeMobileMenu} />
-            <NavLink href="/alumni" label="Alumni" active={isActive("/alumni")} onNavigate={closeMobileMenu} />
-            <NavLink href="/contact" label="Contact" active={isActive("/contact")} onNavigate={closeMobileMenu} />
+      {/* Mobile Menu Dropdown */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-white/10 bg-[#14532d] px-4 pt-3 pb-6 shadow-2xl">
+          <div className="flex flex-col space-y-1">
+            <Link
+              href="/"
+              onClick={closeMobileMenu}
+              className={`rounded-md px-3 py-2.5 text-base font-semibold transition-colors ${
+                isActive("/") && pathname === "/" ? "text-[#FBBF24]" : "text-white hover:text-[#FBBF24]"
+              }`}
+            >
+              হোম
+            </Link>
+
+            <Link
+              href="/notices"
+              onClick={closeMobileMenu}
+              className={`rounded-md px-3 py-2.5 text-base font-semibold transition-colors ${
+                isActive("/notices") ? "text-[#FBBF24]" : "text-white hover:text-[#FBBF24]"
+              }`}
+            >
+              নোটিশ
+            </Link>
+
+            {/* Mobile Gallery Link */}
+            <Link
+              href="/gallery"
+              onClick={closeMobileMenu}
+              className={`rounded-md px-3 py-2.5 text-base font-semibold transition-colors ${
+                isActive("/gallery") ? "text-[#FBBF24]" : "text-white hover:text-[#FBBF24]"
+              }`}
+            >
+              গ্যালারি
+            </Link>
+
+            {/* Mobile Academic Accordion */}
+            <div>
+              <button
+                type="button"
+                onClick={() => toggleMobileDropdown("academic")}
+                className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-base font-semibold text-white hover:text-[#FBBF24] transition-colors"
+              >
+                <span>একাডেমিক</span>
+                <svg
+                  className={`h-4 w-4 text-white/80 transition-transform duration-200 ${
+                    openMobileDropdown === "academic" ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openMobileDropdown === "academic" && (
+                <div className="pl-4 space-y-1 py-1">
+                  {academicLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={closeMobileMenu}
+                      className="block rounded-md px-3 py-2 text-sm font-medium text-emerald-100 hover:text-[#FBBF24] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile More Accordion */}
+            <div>
+              <button
+                type="button"
+                onClick={() => toggleMobileDropdown("more")}
+                className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-base font-semibold text-white hover:text-[#FBBF24] transition-colors"
+              >
+                <span>আরও</span>
+                <svg
+                  className={`h-4 w-4 text-white/80 transition-transform duration-200 ${
+                    openMobileDropdown === "more" ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {openMobileDropdown === "more" && (
+                <div className="pl-4 space-y-1 py-1">
+                  {moreLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={closeMobileMenu}
+                      className="block rounded-md px-3 py-2 text-sm font-medium text-emerald-100 hover:text-[#FBBF24] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile Login Button (No Icon, Hover Text White) */}
+          <div className="mt-4 pt-4 border-t border-white/10">
+            <Link
+              href="/admin/login"
+              onClick={closeMobileMenu}
+              className="flex items-center justify-center rounded-lg bg-white px-5 py-2.5 text-center text-sm font-bold text-[#166534] shadow-sm transition-all duration-200 hover:bg-[#166534] hover:text-white hover:ring-1 hover:ring-white/50"
+            >
+              লগইন
+            </Link>
           </div>
         </div>
-      </nav>
+      )}
     </header>
   );
 }
 
-function NavLink({ href, label, active, onNavigate }: { href: string; label: string; active: boolean; onNavigate: () => void }) {
-  return <Link className={`site-navbar-link relative inline-flex min-h-14 items-center px-5 text-sm font-extrabold uppercase tracking-[0.02em] text-white transition after:absolute after:bottom-0 after:left-5 after:right-5 after:h-[3px] after:bg-[#D9A441] after:transition-transform hover:bg-[#2E8B57] hover:text-white hover:after:scale-x-100 max-[760px]:min-h-[45px] max-[760px]:px-3 max-[760px]:after:left-3 max-[760px]:after:right-3 ${active ? "text-white after:scale-x-100" : "after:scale-x-0"}`} href={href} onClick={onNavigate}>{label}</Link>;
-}
+function NavDropdown({
+  label,
+  links,
+  active,
+}: {
+  label: string;
+  links: { label: string; href: string }[];
+  active: boolean;
+}) {
+  return (
+    <div className="group relative">
+      {/* Dropdown Trigger - No box, color changes on hover/active */}
+      <button
+        type="button"
+        className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[15px] font-semibold transition-colors duration-200 ${
+          active ? "text-[#FBBF24]" : "text-white hover:text-[#FBBF24]"
+        }`}
+      >
+        <span>{label}</span>
+        <svg
+          className="h-3.5 w-3.5 transition-all duration-200 ease-out group-hover:rotate-180 group-hover:text-[#FBBF24]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
 
-function DropdownMenu({ label, links, active, onNavigate }: { label: string; links: { label: string; href: string }[]; active: boolean; onNavigate: () => void }) {
-  const [open, setOpen] = useState(false);
-
-  const handleNavigate = () => {
-    setOpen(false);
-    onNavigate();
-  };
-
-  return <div className="group relative">
-    <button className={`site-navbar-dropdown-trigger relative inline-flex min-h-14 items-center gap-2 border-0 bg-transparent px-5 text-sm font-extrabold uppercase tracking-[0.02em] text-white transition after:absolute after:bottom-0 after:left-5 after:right-5 after:h-[3px] after:bg-[#D9A441] after:transition-transform hover:bg-[#2E8B57] hover:text-white hover:after:scale-x-100 max-[760px]:min-h-[45px] max-[760px]:w-full max-[760px]:justify-start max-[760px]:px-3 max-[760px]:after:left-3 max-[760px]:after:right-3 ${active ? "text-white after:scale-x-100" : "after:scale-x-0"}`} type="button" aria-expanded={open} onClick={() => setOpen((value) => !value)}>{label} <span aria-hidden="true">▾</span></button>
-    <div className={`site-navbar-dropdown-panel pointer-events-none absolute left-1/2 top-[calc(100%-1px)] z-50 min-w-[205px] -translate-x-1/2 translate-y-2 border-t-[3px] border-[#D9A441] bg-white p-2 text-[#263238] opacity-0 shadow-[0_10px_24px_rgb(38_50_56_/_18%)] transition group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100 max-[760px]:static max-[760px]:min-w-0 max-[760px]:translate-x-0 max-[760px]:translate-y-0 max-[760px]:border-0 max-[760px]:bg-[#164A7A] max-[760px]:p-0 max-[760px]:pl-[18px] max-[760px]:shadow-none ${open ? "max-[760px]:block max-[760px]:pointer-events-auto max-[760px]:opacity-100" : "max-[760px]:hidden"}`}>
-      {links.map((link) => <Link key={link.href} className="site-navbar-dropdown-link block px-[13px] py-[11px] text-sm font-bold normal-case text-[#263238] hover:bg-[#2E8B57] hover:text-white max-[760px]:text-white" href={link.href} onClick={handleNavigate}>{link.label}</Link>)}
+      {/* Dropdown Panel with Green Hover Effect on items */}
+      <div className="invisible pointer-events-none absolute left-0 top-full z-50 pt-2 opacity-0 -translate-y-2 scale-95 transition-all duration-200 ease-out group-hover:visible group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 group-focus-within:visible group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:scale-100">
+        <div className="min-w-[200px] overflow-hidden rounded-xl border border-gray-100 bg-white p-1.5 shadow-[0_12px_32px_rgba(0,0,0,0.18)]">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="flex items-center gap-2 rounded-lg px-3.5 py-2.5 text-sm font-semibold text-gray-700 transition-all duration-150 hover:bg-[#166534] hover:text-white hover:pl-4.5"
+            >
+              <span>{link.label}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
-  </div>;
+  );
 }

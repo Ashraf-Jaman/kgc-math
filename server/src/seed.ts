@@ -2,7 +2,6 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { connectDB } from "./config/db.js";
-import { DepartmentMessage } from "./models/DepartmentMessage.js";
 import { Faculty } from "./models/Faculty.js";
 import { NewsEvent } from "./models/NewsEvent.js";
 import { Notice } from "./models/Notice.js";
@@ -94,25 +93,6 @@ const defaultNews = [
   },
 ];
 
-const defaultMessages = [
-  {
-    name: "Md. Moshiur Rahman",
-    designation: "Associate Professor and Head",
-    department: "Department of Mathematics, Kurigram Government College",
-    image: "/faculty-head.jpg",
-    message: "Welcome to the Department of Mathematics at Kurigram Government College. Our department is dedicated to providing quality education, fostering analytical problem-solving skills, and instilling a deep appreciation for mathematical sciences among our students.",
-    order: 1,
-  },
-  {
-    name: "Md. Rashedul Islam",
-    designation: "Lecturer",
-    department: "Department of Mathematics, Kurigram Government College",
-    image: "/lecturer.jpg",
-    message: "Mathematics is the foundation of logical reasoning and scientific inquiry. In our department, we strive to create an engaging and supportive environment where students are inspired to explore mathematical problem solving and reach their highest potential.",
-    order: 2,
-  },
-];
-
 const defaultFaculties = [
   {
     name: "Md. Moshiur Rahman",
@@ -126,26 +106,6 @@ const defaultFaculties = [
     order: 1,
   },
   {
-    name: "Dr. A. K. M. Rezaul Karim",
-    designation: "Assistant Professor",
-    education: "B.Sc. (Honours), M.Sc., Ph.D. in Mathematics",
-    specialization: "Numerical Analysis, Mathematical Modeling",
-    email: "rezaul.math@kgc.ac.bd",
-    phone: "+880 1713-987654",
-    image: "/faculty-head.jpg",
-    order: 2,
-  },
-  {
-    name: "Md. Mostafizur Rahman",
-    designation: "Assistant Professor",
-    education: "B.Sc. (Honours), M.Sc. in Mathematics (RU)",
-    specialization: "Abstract Algebra, Number Theory",
-    email: "mostafiz.math@kgc.ac.bd",
-    phone: "+880 1715-234567",
-    image: "/faculty-head.jpg",
-    order: 3,
-  },
-  {
     name: "Md. Rashedul Islam",
     designation: "Lecturer",
     education: "B.Sc. (Honours), M.Sc. in Mathematics",
@@ -154,26 +114,6 @@ const defaultFaculties = [
     phone: "+880 1718-876543",
     image: "/lecturer.jpg",
     order: 4,
-  },
-  {
-    name: "Farhana Yasmin",
-    designation: "Lecturer",
-    education: "B.Sc. (Honours), M.Sc. in Mathematics (DU)",
-    specialization: "Operations Research, Optimization",
-    email: "farhana.math@kgc.ac.bd",
-    phone: "+880 1718-876543",
-    image: "/faculty-head.jpg",
-    order: 5,
-  },
-  {
-    name: "Md. Mahfuzur Rahman",
-    designation: "Lecturer",
-    education: "B.Sc. (Honours), M.Sc. in Applied Mathematics",
-    specialization: "Complex Analysis, Graph Theory",
-    email: "mahfuz.math@kgc.ac.bd",
-    phone: "+880 1719-543210",
-    image: "/faculty-head.jpg",
-    order: 6,
   },
 ];
 
@@ -191,11 +131,6 @@ async function seed() {
   await NewsEvent.deleteMany({});
   await NewsEvent.insertMany(defaultNews);
   console.log(`✅ Seeded ${defaultNews.length} news events`);
-
-  // Seed Messages
-  await DepartmentMessage.deleteMany({});
-  await DepartmentMessage.insertMany(defaultMessages);
-  console.log(`✅ Seeded ${defaultMessages.length} department messages`);
 
   // Seed Faculty
   await Faculty.deleteMany({});

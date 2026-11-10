@@ -9,6 +9,21 @@ export interface AuthRequest extends Request {
   };
 }
 
+export const requireAdmin = (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+): void => {
+  if (req.user?.role !== "admin") {
+    res.status(403).json({
+      success: false,
+      message: "Access denied. Administrator privileges required.",
+    });
+    return;
+  }
+  next();
+};
+
 export const authenticateJWT = (
   req: AuthRequest,
   res: Response,

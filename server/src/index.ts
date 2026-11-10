@@ -4,9 +4,7 @@ import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js";
-import contactRoutes from "./routes/contact.routes.js";
 import facultyRoutes from "./routes/faculty.routes.js";
-import messageRoutes from "./routes/message.routes.js";
 import newsRoutes from "./routes/news.routes.js";
 import noticeRoutes from "./routes/notice.routes.js";
 
@@ -41,9 +39,7 @@ app.get("/api/health", (_req: Request, res: Response) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/notices", noticeRoutes);
 app.use("/api/news", newsRoutes);
-app.use("/api/messages", messageRoutes);
 app.use("/api/faculties", facultyRoutes);
-app.use("/api/contact", contactRoutes);
 
 // 404 Handler
 app.use((_req: Request, res: Response) => {
