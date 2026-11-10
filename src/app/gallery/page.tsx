@@ -18,18 +18,6 @@ const photos: GalleryPhoto[] = [
   { src: "/slider/6.webp", alt: "ক্যাম্পাসের শিক্ষার্থী পরিবেশ" },
   { src: "/slider/7.webp", alt: "ক্যাম্পাসের লাইব্রেরি এলাকা" },
   { src: "/slider/8.webp", alt: "ক্যাম্পাসের খেলার মাঠ" },
-  {
-    src: "/news-conference-dinner.jpg",
-    alt: "৩য় জাতীয় গণিত সম্মেলন ২০২৫ — ডিনার",
-  },
-  {
-    src: "/news-freshers-reception.jpg",
-    alt: "স্নাতকোত্তর শিক্ষার্থীদের ফ্রেশার্স রিসেপশন",
-  },
-  {
-    src: "/news-math-abstract.jpg",
-    alt: "গণিত সম্মেলনের কল ফর পেপার্স",
-  },
 ];
 
 export default function GalleryPage() {

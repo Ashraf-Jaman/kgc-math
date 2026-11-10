@@ -463,7 +463,7 @@ export default function AdminDashboardPage() {
                     label="ছবির পাথ"
                     value={newsForm.image}
                     onChange={(v) => setNewsForm({ ...newsForm, image: v })}
-                    placeholder="/news-conference-dinner.jpg"
+                    placeholder="/slider/1.webp"
                   />
                   <TextArea
                     label="বিবরণ"
