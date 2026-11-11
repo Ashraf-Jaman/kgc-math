@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-// বিভাগের ফেসবুক পেজ — প্রয়োজনে এই লিংকটি বদলে দিন
+// বিভাগের ফেসবুক পেজ ও গ্রুপ — প্রয়োজনে এই লিংকগুলো বদলে দিন
 const FACEBOOK_PAGE_URL = "https://www.facebook.com/kurigramgc";
+const FACEBOOK_GROUP_URL =
+  "https://web.facebook.com/groups/3553127428304242/";
 
 export default function Footer() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -94,18 +96,30 @@ export default function Footer() {
 
             <p className="text-xs leading-relaxed text-[#D1FAE5] sm:text-sm">
               বিভাগের সর্বশেষ খবর, ইভেন্ট ও কার্যক্রমের ছবি ফেসবুক পেজে প্রকাশ করা হয়।
-              নোটিশ ও আপডেট পেতে আমাদের পেজ ফলো করুন।
+              নোটিশ ও আপডেট পেতে আমাদের পেজ ফলো করুন এবং গ্রুপে যোগ দিন।
             </p>
 
-            <a
-              href={FACEBOOK_PAGE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-2.5 rounded-lg bg-[#1877F2] px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#0f5fc4]"
-            >
-              <FacebookIcon />
-              <span>ফেসবুকে ফলো করুন</span>
-            </a>
+            <div className="mt-5 flex flex-wrap gap-2.5">
+              <a
+                href={FACEBOOK_PAGE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 rounded-lg bg-[#1877F2] px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#0f5fc4]"
+              >
+                <FacebookIcon />
+                <span>ফেসবুকে ফলো করুন</span>
+              </a>
+
+              <a
+                href={FACEBOOK_GROUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 rounded-lg border border-white/25 bg-white/10 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-white/20"
+              >
+                <GroupIcon />
+                <span>গ্রুপে যোগ দিন</span>
+              </a>
+            </div>
 
             <a
               href={FACEBOOK_PAGE_URL}
@@ -122,6 +136,25 @@ export default function Footer() {
                 </span>
                 <span className="block text-xs text-[#A7F3D0]">
                   Facebook পেজ
+                </span>
+              </span>
+            </a>
+
+            <a
+              href={FACEBOOK_GROUP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2.5 flex items-center gap-3 rounded-lg border border-white/10 bg-white/5 p-3 transition hover:bg-white/10"
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1877F2] text-white">
+                <GroupIcon />
+              </span>
+              <span className="min-w-0">
+                <span className="block truncate text-sm font-bold text-white">
+                  গণিত বিভাগ — কমিউনিটি গ্রুপ
+                </span>
+                <span className="block text-xs text-[#A7F3D0]">
+                  Facebook গ্রুপ
                 </span>
               </span>
             </a>
@@ -230,6 +263,24 @@ function PhoneIcon() {
       aria-hidden="true"
     >
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+    </svg>
+  );
+}
+
+function GroupIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5 fill-none stroke-current"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="9" cy="8" r="3.2" />
+      <path d="M2.8 19v-1a5.2 5.2 0 0 1 5.2-5.2h2a5.2 5.2 0 0 1 5.2 5.2v1" />
+      <circle cx="17.5" cy="9.5" r="2.6" />
+      <path d="M18.5 14.2a4.6 4.6 0 0 1 2.7 4.1v.7" />
     </svg>
   );
 }

@@ -6,6 +6,14 @@ const homePhotos = [
   { src: "/slider/3.webp", alt: "কলেজের একাডেমিক ভবন" },
   { src: "/slider/5.jpg", alt: "কলেজ ক্যাম্পাসের মূল ফটক" },
   { src: "/slider/8.webp", alt: "ক্যাম্পাসের খেলার মাঠ" },
+  {
+    src: "/slider/science-show-2021-students.jpg",
+    alt: "বিজ্ঞান শো ২০২০-২১ — বিভাগের শিক্ষার্থীদের দলীপ ছবি",
+  },
+  {
+    src: "/slider/science-show-2021-prize.jpg",
+    alt: "বিজ্ঞান শো ২০২০-২১ — পুরস্কার বিতরণ অনুষ্ঠান",
+  },
 ];
 
 export default function HomeGallery() {

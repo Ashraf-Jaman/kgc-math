@@ -18,6 +18,18 @@ const photos: GalleryPhoto[] = [
   { src: "/slider/6.webp", alt: "ক্যাম্পাসের শিক্ষার্থী পরিবেশ" },
   { src: "/slider/7.webp", alt: "ক্যাম্পাসের লাইব্রেরি এলাকা" },
   { src: "/slider/8.webp", alt: "ক্যাম্পাসের খেলার মাঠ" },
+  {
+    src: "/slider/science-show-2021-students.jpg",
+    alt: "বিজ্ঞান শো ২০২০-২১ — বিভাগের শিক্ষার্থীদের দলীপ ছবি",
+  },
+  {
+    src: "/slider/science-show-2021-prize.jpg",
+    alt: "বিজ্ঞান শো ২০২০-২১ — পুরস্কার বিতরণ অনুষ্ঠান",
+  },
+  {
+    src: "/slider/science-show-2021-winners.jpg",
+    alt: "বিজ্ঞান শো ২০২০-২১ — বিজয়ী শিক্ষার্থীদের সঙ্গে বিভাগীয় শিক্ষক মহোদয়",
+  },
 ];
 
 export default function GalleryPage() {
